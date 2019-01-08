@@ -1,0 +1,14 @@
+{
+    "name": "server",
+    "description": "FYP_API",
+    "author": "Ethan Lam <hellowah5@gmail.com>",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "*",
+        "mongodb": "^2.2.36"
+    },
+    "engine": "node >= 0.10.0",
+    "scripts": {
+        "start": "node server"
+    }
+}
