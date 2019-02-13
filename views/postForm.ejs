@@ -1,0 +1,259 @@
+<html>
+
+<head>
+    <title>SBDIV_Form</title>
+</head>
+
+<body>
+    <form action="/form" enctype="multipart/form-data" method="post">
+
+        <div class="rows">
+            <div class="rowsTitle">Markers</div>
+            <div class="row">
+                <input type="text" name="Title" placeholder="Title" required>
+                <input type="number" step="any" name="Lng" placeholder="Longitude" required>
+                <input type="number" step="any" name="Lat" placeholder="Latitude" required>
+                <input type="text" name="Description" placeholder="Description">
+                <input type="text" name="VideoNo" placeholder="Video No" required>
+                <input type="button" name="deleteRowButton" onclick="deleteRow()" class="deleteRowButton"
+                    value="Delete Marker">
+                <br>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <input type="button" onclick="addRow()" class="addRow" value="Add more Markers">
+            <input type="submit" value="Submit">
+        </div>
+        <!-- <div class="addRowDiv"><input type="button" onclick="addRow()" class="addRow" value="Add more Markers"></div>
+        <div class="submitDiv"><input type="submit" value="Submit"></div> -->
+    </form>
+</body>
+
+<script>
+    function addRow() {
+        var form = document.querySelector('.rows')
+        var br = document.createElement("br")
+
+        var div = document.createElement('div')
+        div.classList.add('row')
+
+        var firstColLabel = document.createElement('label')
+        firstColLabel.innerHTML = 'Title '
+
+        var firstCol = document.createElement('input')
+        firstCol.setAttribute("type", "text")
+        firstCol.name = 'Title'
+        firstCol.placeholder = 'Title'
+        firstCol.required = true;
+
+        var SecondColLabel = document.createElement('label')
+        SecondColLabel.innerHTML = 'Longitude '
+
+        var SecondCol = document.createElement('input')
+        SecondCol.setAttribute("type", "number")
+        SecondCol.setAttribute("step", "any")
+        SecondCol.name = 'Lng'
+        SecondCol.placeholder = 'Longitude'
+        SecondCol.required = true;
+
+        var ThirdColLabel = document.createElement('label')
+        ThirdColLabel.innerHTML = 'Latitude '
+
+        var ThirdCol = document.createElement('input')
+        ThirdCol.setAttribute("type", "number")
+        ThirdCol.setAttribute("step", "any")
+        ThirdCol.name = 'Lat'
+        ThirdCol.placeholder = 'Latitude'
+        ThirdCol.required = true;
+
+        var FourthColLabel = document.createElement('label')
+        FourthColLabel.innerHTML = 'Description '
+
+        var FourthCol = document.createElement('input')
+        FourthCol.setAttribute("type", "text")
+        FourthCol.name = 'Description'
+        FourthCol.placeholder = 'Description'
+        
+        var FifthCol = document.createElement('input')
+        FifthCol.setAttribute("type", "text")
+        FifthCol.name = 'VideoNo'
+        FifthCol.placeholder = 'Video No'
+        FifthCol.required = true;
+
+        var deleteRowButton = document.createElement('input')
+        deleteRowButton.setAttribute("type", "button")
+        deleteRowButton.name = 'deleteRowButton'
+        deleteRowButton.classList.add('deleteRowButton')
+        deleteRowButton.value = 'Delete Marker'
+        deleteRowButton.addEventListener("click", deleteRow)
+
+        div.appendChild(br)
+        // div.appendChild(firstColLabel)
+        div.appendChild(firstCol)
+        // div.appendChild(SecondColLabel)
+        div.appendChild(SecondCol)
+        // div.appendChild(ThirdColLabel)
+        div.appendChild(ThirdCol)
+        // div.appendChild(FourthColLabel)
+        div.appendChild(FourthCol)
+        div.appendChild(FifthCol)
+        div.appendChild(deleteRowButton)
+        div.appendChild(br)
+
+        form.appendChild(div)
+    }
+
+    function deleteRow() {
+        var form = document.querySelector('.rows')
+        form.removeChild(this.parentElement)
+    }
+</script>
+
+</html>
+
+<style>
+    html{
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        ma
+    }
+
+    .btn-group input[type=button],
+    input[type=submit] {
+        margin-right:10px;
+        padding: 10px 32px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 20%;
+        background-color: #f6f6f7;
+        color:black;
+        border: 2px solid #555555;
+        border-radius: 4px;
+    }
+
+    .deleteRowButton:hover,
+    .btn-group input[type=button]:hover,
+    input[type=submit]:hover {
+        background-color: #555555;
+        color: white;
+        font-weight: bold;
+    }
+
+    .deleteRowButton {
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #f6f6f7;
+        color: black;
+        border: 2px solid #555555;
+        border-radius: 4px;
+    }
+
+
+    h1 {
+        text-align: center;
+    }
+
+    .row:nth-last-child(1) {
+        margin-bottom: 1rem;
+    }
+
+    .row {
+        background: white;
+        border-bottom: solid 2.5px grey;
+    }
+
+    .rowsTitle {
+        color: white;
+        background: #48494a;
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    input[type=number],
+    input[type=text] {
+        background: #f6f6f6;
+        color: black;
+        width: 90%;
+        font-size: 16px;
+        border: 0;
+        margin: auto;
+        display: flex;
+        height: 2rem;
+        line-height: 2rem;
+        margin-bottom: 0.5rem;
+        padding: 10px;
+    }
+
+    .deleteRowButton {
+        display: flex;
+        margin: auto;
+    }
+
+    .rows {
+        width: 90%;
+        margin: auto;
+    }
+
+    label {
+        margin-left: 0.8rem;
+    }
+
+    .addRowDiv>*,
+    .submitDiv>* {
+        background: transparent;
+        border: 0;
+        color: white;
+        font-size: 1.25rem;
+        font-weight: bold;
+        width: 100%;
+    }
+
+    ::-webkit-input-placeholder {
+        color: grey;
+        font-size: 15px;
+    }
+
+    ::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        color: grey;
+        font-size: 15px;
+    }
+
+    ::-moz-placeholder {
+        /* Firefox 19+ */
+        color: grey;
+        font-size: 15px;
+    }
+
+    :-ms-input-placeholder {
+        /* IE 10+ */
+        color: grey;
+        font-size: 15px;
+    }
+
+    :-moz-placeholder {
+        /* Firefox 18- */
+        color: grey;
+        font-size: 15px;
+    }
+
+    .row>input:nth-child(1) {
+        margin-top: 0.5rem;
+    }
+
+    .row {
+        padding-top: 0.5rem;
+    }
+</style>

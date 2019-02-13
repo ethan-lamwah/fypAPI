@@ -1,0 +1,301 @@
+'use strict';
+
+class DynamicFormObserver {
+    rowWasCreated(element) {
+    }
+
+    rowWasRemoved(element) {
+    }
+}
+
+class DynamicForms {
+
+    constructor() {
+        this.dynamic_elements = {};
+        this.templates = {};
+        this.observers = [];
+    }
+
+    /**
+     * Adds an observer.
+     *
+     * The observer should have the following functions:
+     * * rowWasCreated
+     * * rowWasRemoved
+     *
+     * @param observer
+     */
+    addObserver(observer) {
+        this.observers.push(observer);
+    }
+
+    /**
+     * Used to notify the observers that a row was removed.
+     *
+     * @param element The element that was removed.
+     */
+    rowWasRemoved(element) {
+        for (let i in this.observers) {
+            let observer = this.observers[i];
+            if (observer.rowWasRemoved !== undefined && typeof observer.rowWasRemoved === 'function') {
+                observer.rowWasRemoved(element);
+            } else {
+                console.log('[-] DynamicForms: observer function missing "rowWasRemoved"');
+            }
+        }
+    }
+
+    /**
+     * Used to notify the observers that a row was created.
+     *
+     * @param element The element that was created.
+     */
+    rowWasCreated(element) {
+        for (let i in this.observers) {
+            let observer = this.observers[i];
+            if (observer.rowWasCreated !== undefined && typeof observer.rowWasCreated === 'function') {
+                observer.rowWasCreated(element);
+            } else {
+                console.log('[-] DynamicForms: observer function missing "rowWasCreated"');
+            }
+        }
+    }
+
+    /**
+     * Automatically sets-up a form, searching the dom for any compatible divs.
+     */
+    automaticallySetupForm() {
+        $("[data-dynamic-form] [data-dynamic-form-template]").each(function (key, value) {
+            let element = $(value);
+            let parent = element.parent();
+            this.setupForm(parent, element);
+        }.bind(this));
+    }
+
+    /**
+     * Sets up a form to be made dynamic.
+     *
+     * @param parent The parent div.
+     * @param element The form div.
+     */
+    setupForm(parent, element) {
+        element.detach();
+        let fillData = element.data('dynamic-form-fill');
+
+        if (fillData === undefined) {
+            this.createNewRow(parent, element);
+        } else if (typeof fillData !== 'string') {
+            for (let prop in fillData) {
+                if (fillData.hasOwnProperty(prop)) {
+                    this.createNewRow(parent, element, prop, fillData[prop]);
+                }
+            }
+            this.createNewRow(parent, element);
+        } else {
+            this.createNewRow(parent, element);
+        }
+
+        DynamicForms.handleButtons(parent);
+    }
+
+    /**
+     * Creates a new row in the form.
+     *
+     * @param parent The parent div.
+     * @param element The template element.
+     * @param index The index of the new element (used for fill).
+     * @param value The value of the new element (used for fill).
+     */
+    createNewRow(parent, element, index = undefined, value = undefined) {
+        let cloned = element.clone();
+        let templateId = element.data('dynamic-form-template');
+        let parsedValue = DynamicForms.deepValues(value);
+
+        if (this.templates[templateId] === undefined) {
+            this.templates[templateId] = 0;
+        } else {
+            this.templates[templateId]++;
+        }
+
+        let templateIdNumber = this.templates[templateId];
+
+        cloned.removeAttr('data-dynamic-form-template');
+        cloned.removeAttr('data-dynamic-form-fill');
+
+        let isFirst;
+        cloned.find("[data-dynamic-form-input-id-template]").each(function (inputKey, inputValue) {
+            let inputElement = $(inputValue);
+            let name = inputElement.attr('name');
+            isFirst = (this.dynamic_elements[name] === undefined);
+            let id = inputElement.data('dynamic-form-input-id-template');
+
+            if (parsedValue !== undefined) {
+                let dynamicName = inputElement.data('dynamic-form-input-name');
+                if (typeof parsedValue === 'string') {
+                    inputElement.val(parsedValue);
+                } else if (typeof parsedValue === 'object' && parsedValue.hasOwnProperty(dynamicName)) {
+                    inputElement.val(parsedValue[dynamicName]);
+                }
+            }
+
+            let inputName;
+            if (index === undefined) {
+                if (this.dynamic_elements[name] === undefined) {
+                    this.dynamic_elements[name] = 0;
+                } else {
+                    this.dynamic_elements[name]++;
+                }
+
+                inputName = name.replace(id, DynamicForms.numToChar(this.dynamic_elements[name]));
+            } else {
+                inputName = name.replace(id, index);
+            }
+
+            inputElement.attr('name', inputName);
+
+        }.bind(this));
+
+        cloned.find('[data-dynamic-form-add]').each(function (addKey, addValue) {
+            let button = $(addValue);
+            button.attr('data-dynamic-form-add', DynamicForms.getDataTagForButton(templateId, 'add', templateIdNumber));
+            button.click(function () {
+                this.createNewRow(parent, element);
+                DynamicForms.handleButtons(parent);
+            }.bind(this));
+        }.bind(this));
+
+        cloned.find('[data-dynamic-form-remove]').each(function (addKey, addValue) {
+            let button = $(addValue);
+            button.attr('data-dynamic-form-remove', DynamicForms.getDataTagForButton(templateId, 'remove', templateIdNumber));
+            button.click(function () {
+                cloned.remove();
+                DynamicForms.handleButtons(parent);
+                DynamicForms.updateRemoveField(parent, templateId, index);
+                this.rowWasRemoved(cloned);
+            }.bind(this));
+        }.bind(this));
+
+        cloned.show();
+        cloned.appendTo(parent);
+        this.rowWasCreated(cloned);
+    }
+
+    /**
+     * Makes a hidden field of any removed row, meant to keep track of elements already added to the database.
+     *
+     * @param parent The parent div.
+     * @param templateId The id of the template
+     * @param index The index of the element.
+     */
+    static updateRemoveField(parent, templateId, index) {
+        if (!isNaN(parseInt(index)) && isFinite(index)) {
+            if (parent.find("input[type='hidden']").length === 0) {
+                parent.prepend('<input type="hidden" name="remove_' + templateId + '" value="' + index + '" />');
+            } else {
+                let removeField = $(parent.find("input[type='hidden']")[0]);
+                let value = removeField.val();
+                removeField.val(value + "," + index);
+            }
+        }
+    }
+
+    /**
+     * Generates the data tag string to be used for buttons.
+     *
+     * @param templateId The template id.
+     * @param type The type of button.
+     * @param templateIdNumber The index of the element within a template.
+     *
+     * @returns {string}
+     */
+    static getDataTagForButton(templateId, type, templateIdNumber) {
+        return templateId + '-' + type + '-' + templateIdNumber;
+    }
+
+    /**
+     * Shows all but the bottom removed button, hides all but the bottom add button
+     *
+     * @param parent
+     */
+    static handleButtons(parent) {
+        parent.find('[data-dynamic-form-add]').each(function (key, value) {
+            $(value).hide();
+        });
+        parent.find('[data-dynamic-form-add]').last().show();
+        parent.find('[data-dynamic-form-remove]').each(function (key, value) {
+            $(value).show();
+        });
+        parent.find('[data-dynamic-form-remove]').last().hide();
+    }
+
+    /**
+     * Returns an index converted to base 26 letters.
+     *
+     * Examples:
+     * * DynamicForms.numToChar(0) == 'a'
+     * * DynamicForms.numToChar(1) == 'b'
+     * * DynamicForms.numToChar(25) == 'z'
+     * * DynamicForms.numToChar(26) == 'aa'
+     * * DynamicForms.numToChar(702) == 'aaaa'
+     *
+     * @param i The number to convert.
+     *
+     * @returns {string}
+     */
+    static numToChar(i) {
+        let letters = 'abcdefghijklmnopqrstuvwxyz';
+        let string = '';
+
+        i++;
+        while (i > 0) {
+            i--;
+            let remainder = i % letters.length;
+
+            string = letters[remainder] + string;
+
+            i = (i - remainder) / letters.length;
+        }
+
+        return string;
+    }
+
+    /**
+     * This recursive function builds the deep value strings for use in filling process
+     *
+     * Examples:
+     *   * deepValues({foo: {en: 'foo en', de: 'foo de'}})
+     *      => {'foo.en': 'foo en', 'foo.de': 'foo de'}
+     *   * deepValues({foo: translations: {{en: 'foo en', de: 'foo de'}}})
+     *      => {'foo.translations.en': 'foo en', 'foo.translations.de': 'foo de'}
+     *
+     * @param deepValue
+     * @returns {*}
+     */
+    static deepValues(deepValue) {
+        if (deepValue === undefined || typeof deepValue === 'string') {
+            return deepValue;
+        }
+
+        let values = {};
+        for (let prop in deepValue) {
+            if (deepValue.hasOwnProperty(prop)) {
+                if (typeof deepValue[prop] === 'string') {
+                    values[prop] = deepValue[prop];
+                } else if (typeof deepValue[prop] === 'object') {
+                    let deeperValue = DynamicForms.deepValues(deepValue[prop]);
+                    for (let deepProp in deeperValue) {
+                        if (deeperValue.hasOwnProperty(deepProp)) {
+                            let key = prop + '.' + deepProp;
+                            values[key] = deeperValue[deepProp];
+                        }
+                    }
+                }
+            }
+        }
+
+        return values;
+    }
+}
+
+window.DynamicForms = DynamicForms;
+window.DynamicFormObserver = DynamicFormObserver;
