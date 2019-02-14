@@ -58,8 +58,8 @@ app.post('/form', upload.array(), (req, res) => {
 
 	})
 
-	res.writeHead(200, { 'Content-Type': 'application/json' });	
-	res.write(JSON.stringify({ status: 'success' }, null, 3));	
+	res.writeHead(200, { 'Content-Type': 'application/json' });
+	res.write(JSON.stringify({ status: 'success' }, null, 3));
 	res.write(JSON.stringify(output, null, 3));
 	res.end();
 });
@@ -94,7 +94,7 @@ app.get('/api/marker', function (req, res) {
 app.get('/api/marker/:id', function (req, res) {
 	MongoClient.connect(mongourl, function (err, db) {
 		assert.equal(err, null);
-		db.collection("markers").find({"VIDEO_ID":req.params.id}).toArray(function (err, docs) {
+		db.collection("markers").find({ "VIDEO_ID": req.params.id }).toArray(function (err, docs) {
 			assert.equal(err, null);
 			db.close()
 			if (docs != null) {
@@ -130,9 +130,7 @@ app.get('/api/seamarks', function (req, res) {
 			} else {
 				res.sendStatus(404);
 			}
-
 		})
-
 	})
 });
 

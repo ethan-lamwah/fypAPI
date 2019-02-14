@@ -8,7 +8,7 @@
     <form action="/form" enctype="multipart/form-data" method="post">
 
         <div class="rows">
-            <div class="rowsTitle">Markers - SBDIV</div>
+            <div class="rowsTitle">Markers Form - SBDIV</div>
             <div class="row">
                 <label class="info">Route Information</label>
                 <input type="text" name="VideoID" placeholder="Video ID" required>
@@ -17,11 +17,12 @@
                 <br>
             </div>
             <div class="row">
+                <label class="info">Marker</label>
                 <input type="text" name="Title" placeholder="Title" required>
                 <input type="number" step="any" name="Lng" placeholder="Longitude" required>
                 <input type="number" step="any" name="Lat" placeholder="Latitude" required>
-                <input type="text" name="Description" placeholder="Description">
-                <input type="button" name="deleteRowButton" onclick="deleteRow()" class="deleteRowButton" value="Delete Marker">
+                <input type="text" name="Description" placeholder="Description(Optional)">
+                <!-- <input type="button" name="deleteRowButton" onclick="deleteRow()" class="deleteRowButton" value="Delete Marker"> -->
                 <br>
             </div>
         </div>
@@ -76,7 +77,7 @@
         var FourthCol = document.createElement('input')
         FourthCol.setAttribute("type", "text")
         FourthCol.name = 'Description'
-        FourthCol.placeholder = 'Description'
+        FourthCol.placeholder = 'Description(Optional)'
 
         // var FifthCol = document.createElement('input')
         // FifthCol.setAttribute("type", "text")
@@ -88,7 +89,7 @@
         deleteRowButton.setAttribute("type", "button")
         deleteRowButton.name = 'deleteRowButton'
         deleteRowButton.classList.add('deleteRowButton')
-        deleteRowButton.value = 'Delete Marker'
+        deleteRowButton.value = 'Delete'
         deleteRowButton.addEventListener("click", deleteRow)
 
         div.appendChild(br)
@@ -120,6 +121,28 @@
         font-family: Arial, Helvetica, sans-serif;
     }
 
+    h1 {
+        text-align: center;
+    }
+
+    .row:nth-last-child(1) {
+        margin-bottom: 1rem;
+    }
+
+    .row {
+        background: white;
+        border-bottom: solid 2.5px grey;
+    }
+
+    .rowsTitle {
+        color: white;
+        background: #48494a;
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
     .info {
         display: flex;
         justify-content: center;
@@ -130,6 +153,23 @@
     .btn-group {
         display: flex;
         justify-content: center;
+    }
+
+    input[type=number],
+    input[type=text] {
+        /* background: #f6f6f6; */
+        color: black;
+        width: 90%;
+        font-size: 16px;
+        border: 0;
+        margin: auto;
+        display: flex;
+        height: 2rem;
+        line-height: 2rem;
+        margin-bottom: 0.5rem;
+        padding: 10px;
+        border-bottom-style: ridge;
+        border-bottom-width: 3px;
     }
 
     .btn-group input[type=button],
@@ -166,44 +206,6 @@
         color: black;
         border: 2px solid #555555;
         border-radius: 4px;
-    }
-
-
-    h1 {
-        text-align: center;
-    }
-
-    .row:nth-last-child(1) {
-        margin-bottom: 1rem;
-    }
-
-    .row {
-        background: white;
-        border-bottom: solid 2.5px grey;
-    }
-
-    .rowsTitle {
-        color: white;
-        background: #48494a;
-        text-align: center;
-        margin-top: 1rem;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-
-    input[type=number],
-    input[type=text] {
-        background: #f6f6f6;
-        color: black;
-        width: 90%;
-        font-size: 16px;
-        border: 0;
-        margin: auto;
-        display: flex;
-        height: 2rem;
-        line-height: 2rem;
-        margin-bottom: 0.5rem;
-        padding: 10px;
     }
 
     .deleteRowButton {
