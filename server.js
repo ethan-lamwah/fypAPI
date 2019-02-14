@@ -35,7 +35,7 @@ app.post('/form', upload.array(), (req, res) => {
 			object.LATITUDE = formData.Lat[i]
 			object.LONGITUDE = formData.Lng[i]
 			object.DESCRIPTION = formData.Description[i]
-			object.VIDEO_ID = formData.VideoNo[i]
+			object.VIDEO_ID = formData.VideoID
 			output.push(object)
 		}
 	} else {
@@ -44,7 +44,7 @@ app.post('/form', upload.array(), (req, res) => {
 		object.LATITUDE = formData.Lat
 		object.LONGITUDE = formData.Lng
 		object.DESCRIPTION = formData.Description
-		object.VIDEO_ID = formData.VideoNo
+		object.VIDEO_ID = formData.VideoID
 		output.push(object)
 	}
 	console.log(output)
@@ -58,10 +58,10 @@ app.post('/form', upload.array(), (req, res) => {
 
 	})
 
-	res.writeHead(200, { "Content-Type": "text/html" })
-	res.write('<html><body>')
-	res.write('<h1>Insert Success!</h1>')
-	res.end('</body></html>')
+	res.writeHead(200, { 'Content-Type': 'application/json' });	
+	res.write(JSON.stringify({ status: 'success' }, null, 3));	
+	res.write(JSON.stringify(output, null, 3));
+	res.end();
 });
 
 function isArray(obj) {

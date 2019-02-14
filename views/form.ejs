@@ -1,0 +1,63 @@
+<html>
+<head>
+        <title>SBDIV_Form</title>
+        <script src="jquery.min.js"></script>
+        <script src="dynamic_forms.js"></script>
+</head>
+
+<body>
+        Multi Input:
+        <br/>
+        <div data-dynamic-form>
+            <div data-dynamic-form-template="multi">
+                <label class="row">
+                    Title:
+                    <input type="text" name="multi[ID][title]" class="title" data-dynamic-form-input-id-template="ID"/>
+
+                    Lat:
+                    <input type="text" name="multi[ID][lat]" class="lat" data-dynamic-form-input-id-template="ID"/>
+
+                    Lon:
+                    <input type="text" name="multi[ID][lon]" class="lon" data-dynamic-form-input-id-template="ID"/>
+
+                    Description:
+                    <input type="text" name="multi[ID][des]" class="description" data-dynamic-form-input-id-template="ID"/>
+
+                    <button type="button" data-dynamic-form-add>Add</button>
+                    <button type="button" data-dynamic-form-remove>Remove</button>
+                </label>
+            </div>
+
+        </div>
+        <button type="button" onclick="showJson()">JSON</button>
+</body>
+
+<script>
+        var dynamicForms = null
+
+        $(document).ready(function () {
+            dynamicForms = new DynamicForms()
+            dynamicForms.automaticallySetupForm()
+        });
+
+        function showJson () {
+            var rows = document.querySelectorAll('.row')
+            var outputJSON = []
+
+            console.log(rows)
+
+            for (var i=0; i<rows.length; i++) {
+                var JSONObject = new Object()
+                JSONObject.Title = rows[i].children[0].value
+                JSONObject.Lng = rows[i].children[1].value
+                JSONObject.Lon = rows[i].children[2].value
+                JSONObject.Description = rows[i].children[3].value
+                
+                outputJSON.push(JSONObject)
+            }
+
+            console.log(outputJSON)
+        }
+</script> 
+
+</html>

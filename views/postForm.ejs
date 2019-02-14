@@ -8,15 +8,20 @@
     <form action="/form" enctype="multipart/form-data" method="post">
 
         <div class="rows">
-            <div class="rowsTitle">Markers</div>
+            <div class="rowsTitle">Markers - SBDIV</div>
+            <div class="row">
+                <label class="info">Route Information</label>
+                <input type="text" name="VideoID" placeholder="Video ID" required>
+                <input type="text" name="Route" placeholder="Route" required>
+                <input type="text" name="RouteDescription" placeholder="Description(Optional)">
+                <br>
+            </div>
             <div class="row">
                 <input type="text" name="Title" placeholder="Title" required>
                 <input type="number" step="any" name="Lng" placeholder="Longitude" required>
                 <input type="number" step="any" name="Lat" placeholder="Latitude" required>
                 <input type="text" name="Description" placeholder="Description">
-                <input type="text" name="VideoNo" placeholder="Video No" required>
-                <input type="button" name="deleteRowButton" onclick="deleteRow()" class="deleteRowButton"
-                    value="Delete Marker">
+                <input type="button" name="deleteRowButton" onclick="deleteRow()" class="deleteRowButton" value="Delete Marker">
                 <br>
             </div>
         </div>
@@ -25,8 +30,6 @@
             <input type="button" onclick="addRow()" class="addRow" value="Add more Markers">
             <input type="submit" value="Submit">
         </div>
-        <!-- <div class="addRowDiv"><input type="button" onclick="addRow()" class="addRow" value="Add more Markers"></div>
-        <div class="submitDiv"><input type="submit" value="Submit"></div> -->
     </form>
 </body>
 
@@ -74,12 +77,12 @@
         FourthCol.setAttribute("type", "text")
         FourthCol.name = 'Description'
         FourthCol.placeholder = 'Description'
-        
-        var FifthCol = document.createElement('input')
-        FifthCol.setAttribute("type", "text")
-        FifthCol.name = 'VideoNo'
-        FifthCol.placeholder = 'Video No'
-        FifthCol.required = true;
+
+        // var FifthCol = document.createElement('input')
+        // FifthCol.setAttribute("type", "text")
+        // FifthCol.name = 'VideoNo'
+        // FifthCol.placeholder = 'Video No'
+        // FifthCol.required = true;
 
         var deleteRowButton = document.createElement('input')
         deleteRowButton.setAttribute("type", "button")
@@ -97,7 +100,7 @@
         div.appendChild(ThirdCol)
         // div.appendChild(FourthColLabel)
         div.appendChild(FourthCol)
-        div.appendChild(FifthCol)
+        // div.appendChild(FifthCol)
         div.appendChild(deleteRowButton)
         div.appendChild(br)
 
@@ -113,17 +116,25 @@
 </html>
 
 <style>
-    html{
+    html {
         font-family: Arial, Helvetica, sans-serif;
     }
+
+    .info {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        font-weight: bold;
+    }
+
     .btn-group {
         display: flex;
-        justify-content: center;        
+        justify-content: center;
     }
 
     .btn-group input[type=button],
     input[type=submit] {
-        margin-right:10px;
+        margin-right: 10px;
         padding: 10px 32px;
         text-align: center;
         display: inline-block;
@@ -132,7 +143,7 @@
         cursor: pointer;
         width: 20%;
         background-color: #f6f6f7;
-        color:black;
+        color: black;
         border: 2px solid #555555;
         border-radius: 4px;
     }
