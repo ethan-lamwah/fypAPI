@@ -79,10 +79,11 @@ app.get('/api/markers', function (req, res) {
 			if (docs != null) {
 				console.log(docs);
 				res.writeHead(200, { 'Content-Type': 'application/json' });
-				docs.forEach(function (doc) {
-					res.write(JSON.stringify(doc, null, '\t'));
-					res.write('\r\n');
-				})
+				// docs.forEach(function (doc) {
+				// 	res.write(JSON.stringify(doc, null, '\t'));
+				// 	res.write('\r\n');
+				// })
+				res.write(JSON.stringify(docs, null, 3));
 				res.end();
 			} else {
 				res.sendStatus(404);
@@ -101,10 +102,11 @@ app.get('/api/markers/:id', function (req, res) {
 			if (docs != null) {
 				console.log(docs);
 				res.writeHead(200, { 'Content-Type': 'application/json' });
-				docs.forEach(function (doc) {
-					res.write(JSON.stringify(doc, null, '\t'));
-					res.write('\r\n');
-				})
+				// docs.forEach(function (doc) {
+				// 	res.write(JSON.stringify(doc, null, '\t'));
+				// 	res.write('\r\n');
+				// })
+				res.write(JSON.stringify(docs, null, 3));
 				res.end();
 			} else {
 				res.status(404).send("No marker found.");
@@ -123,10 +125,11 @@ app.get('/api/seamarks', function (req, res) {
 			if (docs != null) {
 				console.log(docs);
 				res.writeHead(200, { 'Content-Type': 'application/json' });
-				docs.forEach(function (doc) {
-					res.write(JSON.stringify(doc, null, '\t'));
-					res.write('\r\n');
-				})
+				// docs.forEach(function (doc) {
+				// 	res.write(JSON.stringify(doc, null, '\t'));
+				// 	res.write('\r\n');
+				// })
+				res.write(JSON.stringify(docs, null, 3));
 				res.end();
 			} else {
 				res.sendStatus(404);
