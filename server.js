@@ -60,6 +60,7 @@ app.post('/form', upload.array(), (req, res) => {
 
 	res.writeHead(200, { 'Content-Type': 'application/json' });
 	res.write(JSON.stringify({ status: 'success' }, null, 3));
+	res.write(JSON.stringify({ count: output.length }, null, 3));
 	res.write(JSON.stringify(output, null, 3));
 	res.end();
 });
@@ -69,7 +70,7 @@ function isArray(obj) {
 }
 
 //seamark-api
-app.get('/api/marker', function (req, res) {
+app.get('/api/markers', function (req, res) {
 	MongoClient.connect(mongourl, function (err, db) {
 		assert.equal(err, null);
 		db.collection("markers").find().toArray(function (err, docs) {
@@ -91,7 +92,7 @@ app.get('/api/marker', function (req, res) {
 	})
 });
 
-app.get('/api/marker/:id', function (req, res) {
+app.get('/api/markers/:id', function (req, res) {
 	MongoClient.connect(mongourl, function (err, db) {
 		assert.equal(err, null);
 		db.collection("markers").find({ "VIDEO_ID": req.params.id }).toArray(function (err, docs) {
