@@ -11,14 +11,22 @@ npm start
 ```
 ### Testing
 
-Markers Input:
+### Markers Input:
+```
 http://localhost:8099/form 
+```
 
-GET Markers:
+### GET Markers:
+```
 http://localhost:8099/api/markers
+```
 
-GET Markers with video ID:
+### GET Markers with video ID:
+```
 http://localhost:8099/api/markers/(vIDhere)
+```
 
-GET Seamarks:
+### GET Seamarks:
+```
 http://localhost:8099/api/seamarks
+```
