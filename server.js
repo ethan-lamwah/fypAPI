@@ -59,8 +59,8 @@ app.post('/form', upload.array(), (req, res) => {
 	})
 
 	res.writeHead(200, { 'Content-Type': 'application/json' });
-	res.write(JSON.stringify({ status: 'success' }, null, 3));
-	res.write(JSON.stringify({ count: output.length }, null, 3));
+	res.write(JSON.stringify({ STATUS: 'success' }, null, 3));
+	res.write(JSON.stringify({ COUNT: output.length }, null, 3));
 	res.write(JSON.stringify(output, null, 3));
 	res.end();
 });
