@@ -83,7 +83,8 @@ app.get('/api/markers', function (req, res) {
 				// 	res.write(JSON.stringify(doc, null, '\t'));
 				// 	res.write('\r\n');
 				// })
-				res.write(JSON.stringify(docs, null, 3));
+				//res.write(JSON.stringify(docs, null, 3));
+				res.write(JSON.stringify(docs));
 				res.end();
 			} else {
 				res.sendStatus(404);
