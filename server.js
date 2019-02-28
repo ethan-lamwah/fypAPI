@@ -36,6 +36,7 @@ app.post('/form', upload.array(), (req, res) => {
 			object.LONGITUDE = formData.Lng[i]
 			object.DESCRIPTION = formData.Description[i]
 			object.VIDEO_ID = formData.VideoID
+			object.TYPE = formData.groupType[i]
 			output.push(object)
 		}
 	} else {
@@ -45,6 +46,7 @@ app.post('/form', upload.array(), (req, res) => {
 		object.LONGITUDE = formData.Lng
 		object.DESCRIPTION = formData.Description
 		object.VIDEO_ID = formData.VideoID
+		object.TYPE = formData.groupType
 		output.push(object)
 	}
 	console.log(output)
@@ -59,8 +61,8 @@ app.post('/form', upload.array(), (req, res) => {
 	})
 
 	res.writeHead(200, { 'Content-Type': 'application/json' });
-	res.write(JSON.stringify({ STATUS: 'success' }, null, 3));
-	res.write(JSON.stringify({ COUNT: output.length }, null, 3));
+	res.write(JSON.stringify({ 'Video ID':formData.VideoID, 'Route': formData.Route, 'Description' : formData.RouteDescription, STATUS: 'success', COUNT: output.length }, null, 3));
+
 	res.write(JSON.stringify(output, null, 3));
 	res.end();
 });
