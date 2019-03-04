@@ -19,8 +19,9 @@ app.use(express.static('public'));
 
 //form
 app.get('/form', function (req, res) {
+	var quantity = req.query.quantity != null ? req.query.quantity : 1;	
 	res.status(200);
-	res.render('postForm');
+	res.render('postForm',{quantity});
 })
 
 app.post('/form', upload.array(), (req, res) => {
