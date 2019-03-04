@@ -1,6 +1,6 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <head>
     <title>SBDIV_Form</title>
 </head>
@@ -28,6 +28,7 @@
                     <option value="Pier">Pier</option>
                     <option value="Beach">Beach</option>
                     <option value="Typhoon shelters">Typhoon shelters</option>
+                    <option value="Others">Others</option>
                 </select>
                 <!-- <input type="button" name="deleteRowButton" onclick="deleteRow()" class="deleteRowButton" value="Delete Marker"> -->
                 <br>
@@ -35,7 +36,7 @@
         </div>
 
         <div class="btn-group">
-            <input type="button" onclick="addRow()" class="addRow" value="Add more Markers">
+            <input type="button" onclick="addRow()" class="addRow" value="Add more Markers" title="Add 1 marker form">
             <input type="submit" value="Submit">
         </div>
     </form>
@@ -49,49 +50,44 @@
         var div = document.createElement('div')
         div.classList.add('row')
 
-        var firstColLabel = document.createElement('label')
-        firstColLabel.innerHTML = 'Title '
+        var titleLabel = document.createElement('label')
+        titleLabel.innerHTML = 'Title '
 
-        var firstCol = document.createElement('input')
-        firstCol.setAttribute("type", "text")
-        firstCol.name = 'Title'
-        firstCol.placeholder = 'Title'
-        firstCol.required = true;
+        var titleInput = document.createElement('input')
+        titleInput.setAttribute("type", "text")
+        titleInput.name = 'Title'
+        titleInput.placeholder = 'Title'
+        titleInput.required = true;
 
-        var SecondColLabel = document.createElement('label')
-        SecondColLabel.innerHTML = 'Longitude '
+        var latLabel = document.createElement('label')
+        latLabel.innerHTML = 'Latitude '
 
-        var SecondCol = document.createElement('input')
-        SecondCol.setAttribute("type", "number")
-        SecondCol.setAttribute("step", "any")
-        SecondCol.name = 'Lat'
-        SecondCol.placeholder = 'Latitude'
-        SecondCol.required = true;
+        var latInput = document.createElement('input')
+        latInput.setAttribute("type", "number")
+        latInput.setAttribute("step", "any")
+        latInput.name = 'Lat'
+        latInput.placeholder = 'Latitude'
+        latInput.required = true;
 
-        var ThirdColLabel = document.createElement('label')
-        ThirdColLabel.innerHTML = 'Latitude '
+        var lonLabel = document.createElement('label')
+        lonLabel.innerHTML = 'Longitude '
 
-        var ThirdCol = document.createElement('input')
-        ThirdCol.setAttribute("type", "number")
-        ThirdCol.setAttribute("step", "any")
-        ThirdCol.name = 'Lng'
-        ThirdCol.placeholder = 'Longitude'
-        ThirdCol.required = true;
+        var lonInput = document.createElement('input')
+        lonInput.setAttribute("type", "number")
+        lonInput.setAttribute("step", "any")
+        lonInput.name = 'Lng'
+        lonInput.placeholder = 'Longitude'
+        lonInput.required = true;
 
-        var FourthColLabel = document.createElement('label')
-        FourthColLabel.innerHTML = 'Description '
+        var descLabel = document.createElement('label')
+        descLabel.innerHTML = 'Description '
 
-        var FourthCol = document.createElement('input')
-        FourthCol.setAttribute("type", "text")
-        FourthCol.name = 'Description'
-        FourthCol.placeholder = 'Description(Optional)'
+        var descInput = document.createElement('input')
+        descInput.setAttribute("type", "text")
+        descInput.name = 'Description'
+        descInput.placeholder = 'Description(Optional)'
 
-        // var FifthCol = document.createElement('input')
-        // FifthCol.setAttribute("type", "text")
-        // FifthCol.name = 'VideoNo'
-        // FifthCol.placeholder = 'Video No'
-        // FifthCol.required = true;
-        var optionArray = ["Building", "Pier", "Beach", "Typhoon shelters"];
+        var optionArray = ["Building", "Pier", "Beach", "Typhoon shelters", "Others"];
         var selectList = document.createElement('select')
         selectList.className = "dropdown"
         selectList.name = "groupType"
@@ -110,15 +106,14 @@
         deleteRowButton.addEventListener("click", deleteRow)
 
         div.appendChild(br)
-        // div.appendChild(firstColLabel)
-        div.appendChild(firstCol)
-        // div.appendChild(SecondColLabel)
-        div.appendChild(SecondCol)
-        // div.appendChild(ThirdColLabel)
-        div.appendChild(ThirdCol)
-        // div.appendChild(FourthColLabel)
-        div.appendChild(FourthCol)
-        // div.appendChild(FifthCol)
+        // div.appendChild(titleLabel)
+        div.appendChild(titleInput)
+        // div.appendChild(latLabel)
+        div.appendChild(latInput)
+        // div.appendChild(lonLabel)
+        div.appendChild(lonInput)
+        // div.appendChild(descLabel)
+        div.appendChild(descInput)
         div.appendChild(selectList)
         div.appendChild(deleteRowButton)
         div.appendChild(br)

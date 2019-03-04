@@ -60,9 +60,8 @@ app.post('/form', upload.array(), (req, res) => {
 
 	})
 
-	res.writeHead(200, { 'Content-Type': 'application/json' });
+	res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8'});
 	res.write(JSON.stringify({ 'Video ID':formData.VideoID, 'Route': formData.Route, 'Description' : formData.RouteDescription, STATUS: 'success', COUNT: output.length }, null, 3));
-
 	res.write(JSON.stringify(output, null, 3));
 	res.end();
 });
@@ -80,7 +79,7 @@ app.get('/api/markers', function (req, res) {
 			db.close()
 			if (docs != null) {
 				console.log(docs);
-				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8'});
 				// docs.forEach(function (doc) {
 				// 	res.write(JSON.stringify(doc, null, '\t'));
 				// 	res.write('\r\n');
@@ -89,7 +88,7 @@ app.get('/api/markers', function (req, res) {
 				res.write(JSON.stringify(docs));
 				res.end();
 			} else {
-				res.sendStatus(404);
+				res.status(404).send("No markers found.");
 			}
 		})
 
@@ -104,7 +103,7 @@ app.get('/api/markers/:id', function (req, res) {
 			db.close()
 			if (docs != null) {
 				console.log(docs);
-				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8'});
 				// docs.forEach(function (doc) {
 				// 	res.write(JSON.stringify(doc, null, '\t'));
 				// 	res.write('\r\n');
@@ -112,7 +111,7 @@ app.get('/api/markers/:id', function (req, res) {
 				res.write(JSON.stringify(docs, null, 3));
 				res.end();
 			} else {
-				res.status(404).send("No marker found.");
+				res.status(404).send("No markers found.");
 			}
 		})
 	})
@@ -127,7 +126,7 @@ app.get('/api/seamarks', function (req, res) {
 			db.close()
 			if (docs != null) {
 				console.log(docs);
-				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8'});			
 				// docs.forEach(function (doc) {
 				// 	res.write(JSON.stringify(doc, null, '\t'));
 				// 	res.write('\r\n');
@@ -135,7 +134,7 @@ app.get('/api/seamarks', function (req, res) {
 				res.write(JSON.stringify(docs, null, 3));
 				res.end();
 			} else {
-				res.sendStatus(404);
+				res.status(404).send("No markers found.");
 			}
 		})
 	})
