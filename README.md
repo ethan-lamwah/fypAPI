@@ -11,9 +11,13 @@ npm start
 ```
 ### Testing
 
-### Markers Input:
+### Markers Form:
 ```
 http://localhost:8099/form 
+```
+### Markers Form with quantity = x:
+```
+http://localhost:8099/form?quantity=3 
 ```
 
 ### GET Markers:
