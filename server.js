@@ -54,15 +54,97 @@ app.post('/form', upload.array(), (req, res) => {
 
 	MongoClient.connect(mongourl, function (err, db) {
 		if (err) throw err;
+		db.collection("list").insert({VIDEO_ID: formData.VideoID, ROUTE: formData.Route, DESCRIPTION: formData.RouteDescription}, function (err, res) {
+			if (err) throw err
+			console.log("1 list document inserted")
+		})
 		db.collection("markers").insert(output, function (err, res) {
 			if (err) throw err
-			console.log("1 document inserted")
+			console.log("1 marker document inserted")
 		})
 
 	})
 
 	res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8'});
 	res.write(JSON.stringify({ 'Video ID':formData.VideoID, 'Route': formData.Route, 'Description' : formData.RouteDescription, STATUS: 'success', COUNT: output.length }, null, 3));
+	res.write(JSON.stringify(output, null, 3));
+	res.end();
+});
+
+//edit
+app.get('/edit', function (req, res) {
+	var vID = req.query.id;
+	var result;
+
+	MongoClient.connect(mongourl, function (err, db) {
+		assert.equal(err, null);
+		db.collection("list").findOne({ "VIDEO_ID": vID}, function (err, docs) {
+			assert.equal(err, null);
+			db.close()
+			if (docs != null) {
+				console.log(docs);
+				result = docs;
+			} else {
+				res.status(404).send("No video found. Please include the Video ID.");
+			}
+		})
+		db.collection("markers").find({ "VIDEO_ID": vID}).toArray(function (err, docs) {
+			assert.equal(err, null);
+			db.close()
+			if (docs != null) {
+				console.log(docs);
+				res.status(200);
+				res.render('edit',{m:docs, result});
+			} else {
+				res.status(404).send("No markers found.");
+			}
+		})
+	})
+	
+});
+
+app.post('/edit', upload.array(), (req, res) => {
+	let formData = req.body;
+	console.log('form data', formData);
+	let output = []
+	var vID = req.query.id
+
+	if (isArray(formData.Title)) {
+		for (var i = 0; i < formData.Title.length; i++) {
+			var object = new Object()
+			object.TITLE = formData.Title[i]
+			object.LATITUDE = formData.Lat[i]
+			object.LONGITUDE = formData.Lng[i]
+			object.DESCRIPTION = formData.Description[i]
+			object.VIDEO_ID = vID;
+			object.TYPE = formData.groupType[i]
+			output.push(object)
+		}
+	} else {
+		var object = new Object()
+		object.TITLE = formData.Title
+		object.LATITUDE = formData.Lat
+		object.LONGITUDE = formData.Lng
+		object.DESCRIPTION = formData.Description
+		object.VIDEO_ID = vID;
+		object.TYPE = formData.groupType
+		output.push(object)
+	}
+	console.log(output)
+
+	MongoClient.connect(mongourl, function (err, db) {
+		if (err) throw err;
+		db.collection("markers").remove({VIDEO_ID: vID});
+		db.collection("markers").insert(output, function (err, res) {
+			if (err) throw err
+			console.log("Updated")
+		})
+		db.collection("list").updateOne({VIDEO_ID: vID},{$set:{ROUTE: formData.Route, DESCRIPTION:formData.RouteDescription}});
+
+	})
+
+	res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8'});
+	res.write(JSON.stringify({ 'Video ID':vID, 'ROUTE': formData.Route, 'DESCRIPTION' : formData.RouteDescription, STATUS: 'Updated', COUNT: output.length }, null, 3));
 	res.write(JSON.stringify(output, null, 3));
 	res.end();
 });

@@ -20,12 +20,17 @@ http://localhost:8099/form
 http://localhost:8099/form?quantity=3 
 ```
 
+### EDIT Markers with Video ID:
+```
+http://localhost:8099/edit?id=3 
+```
+
 ### GET Markers:
 ```
 http://localhost:8099/api/markers
 ```
 
-### GET Markers with video ID:
+### GET Markers with Video ID:
 ```
 http://localhost:8099/api/markers/(vIDhere)
 ```

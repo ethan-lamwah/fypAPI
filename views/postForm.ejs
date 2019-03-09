@@ -39,7 +39,7 @@
                 </select>
                 
                 <% if ( i != 0) { %>
-                <input type="button" name="deleteRowButton" onclick="document.querySelector('.rows').removeChild(this.parentNode);updateCountMarker()" class="deleteRowButton" value="Delete">
+                <input type="button" name="deleteRowButton" onclick="document.querySelector('.rows').removeChild(this.parentNode);updateCountMarker();updateCountState();" class="deleteRowButton" value="Delete">
                 <% } %>
                 <br>
             </div>
@@ -48,7 +48,7 @@
 
         <div class="btn-group">
             <input type="button" id="countMarker" disabled=true style="display:none" title="Display the quantity of Markers">
-            <input type="button" onclick="addRow()" class="addRow" value="+" title="Add more markers" style="font-size: xx-large;">
+            <input type="button" onclick="addRow();updateCountState();" class="addRow" value="+" title="Add more markers" style="font-size: xx-large;">
             <input type="submit" value="Submit">
         </div>
     </form>

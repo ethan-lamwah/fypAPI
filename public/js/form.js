@@ -88,9 +88,12 @@ function updateCountMarker(){
     var countMarker = document.getElementById('countMarker');
     countMarker.value = "Quantity: " + (rowCount - 1);
     countMarker.style = "display:inline-block";
+}
 
-    if (history.pushState) {
+function updateCountState(){
+     var rowCount =document.querySelectorAll('div.row').length;
+     if (history.pushState) {
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?quantity='+ (rowCount - 1) ;
         window.history.pushState({path:newurl},'',newurl);
     }
-}
+ }

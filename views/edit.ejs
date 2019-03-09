@@ -1,0 +1,57 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<head>
+    <title>SBDIV_Form</title>
+    <link rel="stylesheet" type="text/css" href="/css/form.css">
+    <script type="text/javascript" src="/js/form.js"></script>
+</head>
+
+<body>
+    <form action="/edit?id=<%= m[0].VIDEO_ID %>" enctype="multipart/form-data" method="post">
+        <div class="rows">
+            <div class="rowsTitle">Edit Markers- SBDIV</div>
+            <div class="row">
+                <label class="info">Route Information</label>
+                <input type="text" name="VideoID" placeholder="Video ID or Name" value="<%= m[0].VIDEO_ID %>" required disabled>
+                <input type="text" name="Route" placeholder="Route(Optional)" value="<%= result.ROUTE %>">
+                <input type="text" name="RouteDescription" placeholder="Description(Optional)" value="<%= result.DESCRIPTION %>">
+                <br>
+            </div>
+
+            <% for (var i = 0; i<m.length ;i++) { %>                
+            <div class="row">
+                <% if ( i == 0) { %>
+                <label class="info">Edit Marker</label>
+                <% } %>
+                <input type="text" name="Title" placeholder="Title" value="<%= m[i].TITLE %>" required>
+                <input type="number" step="any" name="Lat" placeholder="Latitude" value="<%= m[i].LATITUDE %>" required>
+                <input type="number" step="any" name="Lng" placeholder="Longitude" value="<%= m[i].LONGITUDE %>" required>
+                <input type="text" name="Description" placeholder="Description(Optional)" value="<%= m[i].DESCRIPTION %>">
+                <select name="groupType" class="dropdown" id="sList<%=i%>"> 
+                    <option value="Building">Building</option>
+                    <option value="Pier">Pier</option>
+                    <option value="Beach">Beach</option>
+                    <option value="Typhoon shelters">Typhoon shelters</option>
+                    <option value="Others">Others</option>
+                </select>
+                <script>
+                    document.querySelector('#sList<%=i%>').value = '<%= m[i].TYPE %>';
+                </script>
+                <% if ( i != 0) { %>
+                <input type="button" name="deleteRowButton" onclick="document.querySelector('.rows').removeChild(this.parentNode);updateCountMarker()" class="deleteRowButton" value="Delete">
+                <% } %>
+                <br>
+            </div>
+            <% }  %>
+        </div>
+
+        <div class="btn-group">
+            <input type="button" id="countMarker" disabled=true title="Display the quantity of Markers" value="Quantity: <%=m.length%>" >
+            <input type="button" onclick="addRow()" class="addRow" value="+" title="Add more markers" style="font-size: xx-large;">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</body>
+</html>
