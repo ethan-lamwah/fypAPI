@@ -17,6 +17,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+app.get('/', function (req, res) {
+	// console.log(req.session);
+	// if (!req.session.authenticated) {
+	// 	res.redirect('/login');
+	// } else {
+		MongoClient.connect(mongourl, function (err, db) {
+			assert.equal(err, null);
+			db.collection("list").find({}).toArray( function (err, docs) {
+				assert.equal(err, null);
+				db.close()
+				if (docs != null) {
+					console.log(docs);
+					res.status(200);
+					res.render('list', {docs});
+					
+				} else {
+					res.status(404).send("Not found");
+				}
+			})
+		});
+
+	//}
+});
+
 //form
 app.get('/form', function (req, res) {
 	var quantity = req.query.quantity != null ? req.query.quantity : 1;	
@@ -54,7 +78,7 @@ app.post('/form', upload.array(), (req, res) => {
 
 	MongoClient.connect(mongourl, function (err, db) {
 		if (err) throw err;
-		db.collection("list").insert({VIDEO_ID: formData.VideoID, ROUTE: formData.Route, DESCRIPTION: formData.RouteDescription}, function (err, res) {
+		db.collection("list").insert({VIDEO_ID: formData.VideoID, ROUTE: formData.Route, DESCRIPTION: formData.RouteDescription, COUNT: output.length}, function (err, res) {
 			if (err) throw err
 			console.log("1 list document inserted")
 		})
@@ -139,7 +163,7 @@ app.post('/edit', upload.array(), (req, res) => {
 			if (err) throw err
 			console.log("Updated")
 		})
-		db.collection("list").updateOne({VIDEO_ID: vID},{$set:{ROUTE: formData.Route, DESCRIPTION:formData.RouteDescription}});
+		db.collection("list").updateOne({VIDEO_ID: vID},{$set:{ROUTE: formData.Route, DESCRIPTION:formData.RouteDescription, COUNT: output.length}});
 
 	})
 

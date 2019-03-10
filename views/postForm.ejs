@@ -6,18 +6,30 @@
     <title>SBDIV_Form</title>
     <link rel="stylesheet" type="text/css" href="/css/form.css">
     <script type="text/javascript" src="/js/form.js"></script>
+    <style>        
+        input[type="text"], input[type="number"], .dropdown{            
+            color: black;
+            margin-left: 150px;
+            margin-right: 20px;
+            width: -webkit-fill-available;            
+        }
+        .dropdown {
+            width: auto;
+        }
+    </style>
+        
 </head>
 
 <body>
-    <form action="/form" enctype="multipart/form-data" method="post">
+    <form action="/form" enctype="multipart/form-data" method="post" onsubmit="return confirm('Press \'YES\' to insert the markers.');">
 
         <div class="rows">
             <div class="rowsTitle">Markers Form - SBDIV</div>
             <div class="row">
                 <label class="info">Route Information</label>
-                <input type="text" name="VideoID" placeholder="Video ID or Name" required>
-                <input type="text" name="Route" placeholder="Route(Optional)">
-                <input type="text" name="RouteDescription" placeholder="Description(Optional)">
+                <label class="attrLabel">Video: </label><input type="text" name="VideoID" placeholder="Video ID or Name" required>
+                <label class="attrLabel">Route: </label><input type="text" name="Route" placeholder="Route(Optional)">
+                <label class="attrLabel">Description: </label><input type="text" name="RouteDescription" placeholder="Description(Optional)">
                 <br>
             </div>
 
@@ -26,11 +38,11 @@
                 <% if ( i == 0) { %>
                 <label class="info">Marker</label>
                 <% } %>
-                <input type="text" name="Title" placeholder="Title" required>
-                <input type="number" step="any" name="Lat" placeholder="Latitude" required>
-                <input type="number" step="any" name="Lng" placeholder="Longitude" required>
-                <input type="text" name="Description" placeholder="Description(Optional)">
-                <select name="groupType" class="dropdown">
+                <label class="attrLabel">Title: </label><input type="text" name="Title" placeholder="Title" required>
+                <label class="attrLabel">Latitude: </label><input type="number" step="any" name="Lat" placeholder="Latitude" required>
+                <label class="attrLabel">Longitude: </label><input type="number" step="any" name="Lng" placeholder="Longitude" required>
+                <label class="attrLabel">Description: </label><input type="text" name="Description" placeholder="Description(Optional)">
+                <label class="attrLabel">Type: </label><select name="groupType" class="dropdown">
                     <option value="Building">Building</option>
                     <option value="Pier">Pier</option>
                     <option value="Beach">Beach</option>

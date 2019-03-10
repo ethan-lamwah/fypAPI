@@ -11,7 +11,12 @@ npm start
 ```
 ### Testing
 
-### Markers Form:
+### Markers Form - View all Route Docs:
+```
+http://localhost:8099
+```
+
+### Markers Form - Insert Markers:
 ```
 http://localhost:8099/form 
 ```

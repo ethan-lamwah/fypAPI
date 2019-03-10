@@ -121,6 +121,12 @@ label {
   margin-left: 0.8rem;
 }
 
+.attrLabel{
+  float: left;
+  padding: 4px 20px;
+  font-size: 18px;
+}
+
 .addRowDiv > *,
 .submitDiv > * {
   background: transparent;
@@ -179,3 +185,5 @@ label {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+

@@ -6,7 +6,8 @@ function addRow() {
     div.classList.add('row')
 
     var titleLabel = document.createElement('label')
-    titleLabel.innerHTML = 'Title '
+    titleLabel.innerHTML = 'Title: '
+    titleLabel.className = "attrLabel"
 
     var titleInput = document.createElement('input')
     titleInput.setAttribute("type", "text")
@@ -15,7 +16,8 @@ function addRow() {
     titleInput.required = true;
 
     var latLabel = document.createElement('label')
-    latLabel.innerHTML = 'Latitude '
+    latLabel.innerHTML = 'Latitude: '
+    latLabel.className = "attrLabel"
 
     var latInput = document.createElement('input')
     latInput.setAttribute("type", "number")
@@ -25,7 +27,8 @@ function addRow() {
     latInput.required = true;
 
     var lonLabel = document.createElement('label')
-    lonLabel.innerHTML = 'Longitude '
+    lonLabel.innerHTML = 'Longitude: '
+    lonLabel.className = "attrLabel"
 
     var lonInput = document.createElement('input')
     lonInput.setAttribute("type", "number")
@@ -35,12 +38,17 @@ function addRow() {
     lonInput.required = true;
 
     var descLabel = document.createElement('label')
-    descLabel.innerHTML = 'Description '
+    descLabel.innerHTML = 'Description: '
+    descLabel.className = "attrLabel"
 
     var descInput = document.createElement('input')
     descInput.setAttribute("type", "text")
     descInput.name = 'Description'
     descInput.placeholder = 'Description(Optional)'
+
+    var typeLabel = document.createElement('label')
+    typeLabel.innerHTML = 'Type: '
+    typeLabel.className = "attrLabel"
 
     var optionArray = ["Building", "Pier", "Beach", "Typhoon shelters", "Others"];
     var selectList = document.createElement('select')
@@ -61,14 +69,15 @@ function addRow() {
     deleteRowButton.addEventListener("click", deleteRow)
 
     div.appendChild(br)
-    // div.appendChild(titleLabel)
+    div.appendChild(titleLabel)
     div.appendChild(titleInput)
-    // div.appendChild(latLabel)
+    div.appendChild(latLabel)
     div.appendChild(latInput)
-    // div.appendChild(lonLabel)
+    div.appendChild(lonLabel)
     div.appendChild(lonInput)
-    // div.appendChild(descLabel)
+    div.appendChild(descLabel)
     div.appendChild(descInput)
+    div.appendChild(typeLabel)
     div.appendChild(selectList)
     div.appendChild(deleteRowButton)
     div.appendChild(br)

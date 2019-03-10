@@ -1,0 +1,91 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<head>
+    <title>SBDIV_Form</title>
+    <link rel="stylesheet" type="text/css" href="/css/form.css">
+    <script type="text/javascript" src="/js/form.js"></script>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li:last-child {
+            border: none;
+        }
+
+        li {
+            font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+            border-bottom: 1px solid #ccc;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #000;
+            display: block;
+        }
+
+        input[type="text"]{
+            background-color: #f6f6f74a;
+            color: black;
+            margin-left: 150px;
+            width: -webkit-fill-available;
+            cursor: pointer;
+        }
+
+        textarea{
+            background-color: #f6f6f74a;
+            color: black;
+            margin-left: 150px;
+            width: -webkit-fill-available;
+            margin-top: -30px;
+            border: 1px solid #ccc;
+            border-radius: 4px;            
+            font-size: 16px;            
+            padding: 5px 20px;
+            cursor: pointer;
+        }
+
+        .attr-div{            
+            font-size: 18px;            
+            padding: 5px 20px;            
+        }
+
+        .attrLabel{
+            float: left;
+            cursor: pointer;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="rows">
+        <div class="rowsTitle">Markers Form- SBDIV</div>
+        <ul>
+            <% for (var i = 0; i<docs.length ;i++) { %>
+            <% if ( i == 0) { %>
+            <label class="info">Route Document(s)</label>
+            <% } %>
+            <div class="row">
+                <li><a href="/edit?id=<%= docs[i].VIDEO_ID %>">                    
+                    <div class="attr-div"><label class="attrLabel">Video: </label><input type="text" name="Video_ID" value="<%= docs[i].VIDEO_ID %>" disabled></div>
+                    <div class="attr-div"><label class="attrLabel">Route: </label><input type="text" name="Route" value="<%= docs[i].ROUTE %>" placeholder="Route(Optional)" disabled></div>
+                    <div class="attr-div"><label class="attrLabel">Description: </label><textarea placeholder="Description(Optional)" disabled><%= docs[i].DESCRIPTION %></textarea></div>
+                    <div class="attr-div"><label class="attrLabel">Quantity: </label><input type="text" name="RouteDescription" value="<%= docs[i].COUNT %>"  disabled></div>                  
+                </a></li>
+            </div>
+            <% }  %>
+
+            <H5>Showing <%= docs.length %> document(s)</H5>
+            <div class="btn-group">
+                <input type="button" value="Insert" onclick="location.href='/form';">
+            </div>
+
+</body>
+
+</html>

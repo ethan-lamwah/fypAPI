@@ -6,17 +6,28 @@
     <title>SBDIV_Form</title>
     <link rel="stylesheet" type="text/css" href="/css/form.css">
     <script type="text/javascript" src="/js/form.js"></script>
+    <style>        
+            input[type="text"], input[type="number"], .dropdown{            
+                color: black;
+                margin-left: 150px;
+                margin-right: 20px;
+                width: -webkit-fill-available;            
+            }
+            .dropdown {
+                width: auto;
+            }
+    </style>
 </head>
 
 <body>
-    <form action="/edit?id=<%= m[0].VIDEO_ID %>" enctype="multipart/form-data" method="post">
+    <form action="/edit?id=<%= m[0].VIDEO_ID %>" enctype="multipart/form-data" method="post" onsubmit="return confirm('Are you sur to submit the change?');">
         <div class="rows">
             <div class="rowsTitle">Edit Markers- SBDIV</div>
             <div class="row">
                 <label class="info">Route Information</label>
-                <input type="text" name="VideoID" placeholder="Video ID or Name" value="<%= m[0].VIDEO_ID %>" required disabled>
-                <input type="text" name="Route" placeholder="Route(Optional)" value="<%= result.ROUTE %>">
-                <input type="text" name="RouteDescription" placeholder="Description(Optional)" value="<%= result.DESCRIPTION %>">
+                <label class="attrLabel">Video: </label><input type="text" name="VideoID" placeholder="Video ID or Name" value="<%= m[0].VIDEO_ID %>" required disabled>
+                <label class="attrLabel">Route: </label><input type="text" name="Route" placeholder="Route(Optional)" value="<%= result.ROUTE %>">
+                <label class="attrLabel">Description: </label><input type="text" name="RouteDescription" placeholder="Description(Optional)" value="<%= result.DESCRIPTION %>">
                 <br>
             </div>
 
@@ -25,11 +36,11 @@
                 <% if ( i == 0) { %>
                 <label class="info">Edit Marker</label>
                 <% } %>
-                <input type="text" name="Title" placeholder="Title" value="<%= m[i].TITLE %>" required>
-                <input type="number" step="any" name="Lat" placeholder="Latitude" value="<%= m[i].LATITUDE %>" required>
-                <input type="number" step="any" name="Lng" placeholder="Longitude" value="<%= m[i].LONGITUDE %>" required>
-                <input type="text" name="Description" placeholder="Description(Optional)" value="<%= m[i].DESCRIPTION %>">
-                <select name="groupType" class="dropdown" id="sList<%=i%>"> 
+                <label class="attrLabel">Title: </label><input type="text" name="Title" placeholder="Title" value="<%= m[i].TITLE %>" required>
+                <label class="attrLabel">Latitude: </label><input type="number" step="any" name="Lat" placeholder="Latitude" value="<%= m[i].LATITUDE %>" required>
+                <label class="attrLabel">Longitude: </label><input type="number" step="any" name="Lng" placeholder="Longitude" value="<%= m[i].LONGITUDE %>" required>
+                <label class="attrLabel">Description: </label><input type="text" name="Description" placeholder="Description(Optional)" value="<%= m[i].DESCRIPTION %>">
+                <label class="attrLabel">Type: </label><select name="groupType" class="dropdown" id="sList<%=i%>"> 
                     <option value="Building">Building</option>
                     <option value="Pier">Pier</option>
                     <option value="Beach">Beach</option>
