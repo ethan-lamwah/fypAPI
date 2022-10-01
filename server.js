@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var mongourl = 'mongodb://hellowah5:hellowah5@ds149682.mlab.com:49682/11664934';
+var mongourl = process.env.MongoURL;
 
 var express = require('express');
 var app = express();
